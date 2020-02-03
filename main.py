@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+from file_proc import read_file, write_file
 
 app = Flask(__name__)
 
@@ -23,6 +24,16 @@ def contact():
 def params():
   return render_template('params.html', args = request.args)
 
+@app.route('/read_from_file')
+def readFromFile():
+  content = read_file()
+  return content
 
+@app.route('/write_to_file, methods = ['POST'])
+def writeToFile():
+  request_type = request.content_type
+  if(request.type == 'application/json'):
+    contentJSON = request.get_json()
+    
 if __name__ == '__main__':
   app.run(host = '0.0.0.0', port = 6211, threaded = True, debug = True)
