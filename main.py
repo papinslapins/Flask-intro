@@ -34,6 +34,27 @@ def writeToFile():
   request_type = request.content_type
   if(request.type == 'application/json'):
     contentJSON = request.get_json()
+    write_file(contentJSON['data'])
+
+    return contentJSON
+
+  else:
+
+    return f"Request type '{request_type} not supported!"
+
+  
+
+@app.route('/file', methods = ['POST', 'GET'])
+
+def fileWork():
+
+  if request.method == 'GET':
+
+    return readFromFile()
+
+  elif request.method == 'POST':
+
+    return writeToFile()
     
 if __name__ == '__main__':
   app.run(host = '0.0.0.0', port = 6211, threaded = True, debug = True)
